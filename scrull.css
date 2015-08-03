@@ -1,0 +1,46 @@
+.scrull {
+	direction: inherit;
+	overflow: hidden;
+	position: relative;
+}
+	.inner-scrull {
+		overflow: auto;
+	}
+		.inner-scrull .scrull-wrapper {
+			/* var scrullPadding = 25 */
+			margin-right: 25px;
+			margin-bottom: 25px;
+		}
+	
+	.scrull:hover .scruller {
+		opacity: 1;
+		-webkit-transform: none;
+		-moz-transform: none;
+		-ms-transform: none;
+		transform: none;
+	}
+	.scruller {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		overflow: hidden;
+		width: 10px;
+		border-radius: 5px;
+		margin: 5px;
+		background: rgba( 0, 0, 0, .1 );
+		-webkit-transform: translateX( 25px );
+		-moz-transform: translateX( 25px );
+		-ms-transform: translateX( 25px );
+		transform: translateX( 25px );
+		-webkit-transition: .2s;
+		transition: .2s;
+	}
+		.indicator {
+			border-radius: 5px;
+			position: absolute;
+			max-height: 100%;
+			top: 0;
+			width: 100%;
+			min-height: 10px;
+			background: #909;
+		}
