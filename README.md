@@ -13,7 +13,6 @@ ___
 ## Example:
 
 ```
-
 <head>
 
   <link rel="stylesheet" href="scrull.min.css" />
@@ -31,5 +30,4 @@ ___
   <script src="scrull.min.js"></script>
   
 </body>
-
 ```
