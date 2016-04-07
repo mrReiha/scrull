@@ -4,7 +4,7 @@
  * @name Scrull
  * @description Making scroll-bars more attracitve
  *
- * @author Reiha Hosseini (@mrReiha) <iam@reiha.net>
+ * @author Reiha Hosseini ( @mrReiha ) <iam@reiha.net>
  * @version v0.0.1
  * @since 07/2015
  *
@@ -18,9 +18,83 @@
 
 		scrolling = function( e ) {
 
-			this.indicator.style.top = ( this.scrollTop * this.itemHeight / this.height ) + 'px';
+			/**
+			 * =================================================================================
+			 * ========= Pixel-way =============================================================
+			 * =================================================================================
+			 */
+			// this.indicator.style.top = ( this.scrollTop * this.itemHeight / this.height ) + 'px';
+
+			this.indicator.style.top = ( this.scrollTop * 100 / this.height ) + '%';
 
 		},
+
+        scrullIt = function( item ) {
+
+			var innerDiv,
+				wrapper,
+				scruller,
+				indicator,
+
+				indicatorHeight,
+
+				isLtr,
+
+				styles = getComputedStyle( item );
+
+			if ( !~item.className.search( /scrull/gi ) )
+				item.className = item.className ? item.className + ' scrull' : 'scrull';
+
+            ( innerDiv = d.createElement( 'div' ) ).className = 'inner-scrull';
+    		( wrapper = d.createElement( 'div' ) ).className = 'scrull-wrapper';
+    		( scruller = d.createElement( 'div' ) ).className = 'scruller';
+    		( indicator = d.createElement( 'div' ) ).className = 'indicator';
+
+    		scruller.appendChild( indicator );
+
+    		innerDiv.innerHTML = item.innerHTML;
+
+    		item.innerHTML = '';
+
+    		innerDiv.appendChild( wrapper );
+    		item.appendChild( innerDiv );
+    		item.appendChild( scruller );
+
+    		innerDiv.indicator = indicator;
+    		innerDiv.height = innerDiv.offsetHeight;
+    		innerDiv.itemHeight = item.offsetHeight;
+
+    		indicatorHeight = Math.ceil( innerDiv.itemHeight * 100 / innerDiv.height ) + Math.ceil( scrullPadding * 100 / innerDiv.height );
+    		indicatorHeight = Math.min( indicatorHeight, 100 );
+    		indicatorHeight = Math.max( indicatorHeight, 5 );
+
+    		indicator.style.height = indicatorHeight + '%';
+
+    		if ( indicatorHeight < 100 & !~item.className.search( /show\-scruller/gi ) )
+    			item.className += ' show-scruller';
+
+    		// .rel == position: relative
+    		if ( styles.position == 'static' )
+    			item.className += ' rel';
+
+    		/**
+    		 * =================================================================================
+    		 * ========= Pixel-way =============================================================
+    		 * =================================================================================
+    		 */
+    		// indicator.style.height = ( innerDiv.itemHeight * scruller.offsetHeight / innerDiv.height ) + 'px';
+
+    		innerDiv.addEventListener( 'scroll', scrolling, false );
+
+    		isLtr = styles.direction == 'ltr';
+
+    		scruller.style[ isLtr ? 'right' : 'left' ] = 0;
+			scruller.className += isLtr ? ' is-ltr' : ' is-rtl';
+
+    		innerDiv.style.width = ( parseInt( styles.width ) + scrullPadding ) + 'px';
+    		innerDiv.style.height = ( parseInt( styles.height ) + scrullPadding ) + 'px';
+
+        },
 
 		scrullTo = function( px ) {
 
@@ -65,59 +139,12 @@
 		item,
 		i = LMs.length,
 
-		innerDiv,
-		wrapper,
-		scruller,
-		indicator,
-
-		indicatorHeight,
-
-		isLtr,
-
 		scrullPadding = 25;
 
-	while ( item = LMs[ --i ] ) {
+	while ( item = LMs[ --i ] )
+        scrullIt( item );
 
-		( innerDiv = d.createElement( 'div' ) ).className = 'inner-scrull';
-		( wrapper = d.createElement( 'div' ) ).className = 'scrull-wrapper';
-		( scruller = d.createElement( 'div' ) ).className = 'scruller';
-		( indicator = d.createElement( 'div' ) ).className = 'indicator';
-
-		scruller.appendChild( indicator );
-
-		innerDiv.innerHTML = item.innerHTML;
-
-		item.innerHTML = '';
-
-		innerDiv.appendChild( wrapper );
-		item.appendChild( innerDiv );
-		item.appendChild( scruller );
-
-		innerDiv.indicator = indicator;
-		innerDiv.height = innerDiv.offsetHeight;
-		innerDiv.itemHeight = item.offsetHeight;
-
-		indicatorHeight = Math.ceil( innerDiv.itemHeight * 100 / innerDiv.height );
-		indicatorHeight = Math.min( indicatorHeight, 100 );
-		indicatorHeight = Math.max( indicatorHeight, 10 );
-
-		indicator.style.height = indicatorHeight + '%';
-
-		/**
-		 * =================================================================================
-		 * ========= Pixel-way =============================================================
-		 * =================================================================================
-		 */
-		// indicator.style.height = ( innerDiv.itemHeight * scruller.offsetHeight / innerDiv.height ) + 'px';
-
-		innerDiv.addEventListener( 'scroll', scrolling, false );
-
-		isLtr = getComputedStyle( item ).direction == 'ltr';
-		scruller.style[ isLtr ? 'right' : 'left' ] = 0;
-
-		innerDiv.style.width = ( parseInt( getComputedStyle( item ).width ) + scrullPadding ) + 'px';
-		innerDiv.style.height = ( parseInt( getComputedStyle( item ).height ) + scrullPadding ) + 'px';
-
-	};
+    w.scullTo = scrullTo;
+    w.scrullIt = scrullIt;
 
 })( this, document );
