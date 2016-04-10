@@ -36,6 +36,8 @@
 				scruller,
 				indicator,
 
+                dragging = false,
+
 				indicatorHeight,
 
 				isLtr,
@@ -66,6 +68,31 @@
 
     		indicatorHeight = Math.ceil( innerDiv.itemHeight * 100 / innerDiv.height ) + Math.ceil( scrullPadding * 100 / innerDiv.height );
     		indicatorHeight = Math.min( indicatorHeight, 100 );
+
+            indicator.addEventListener( 'mousedown', function( e ) {
+
+                dragging = true;
+
+            }, false );
+
+            d.addEventListener( 'mousemove', function( e ) {
+
+                var offset;
+
+                if ( !dragging )
+                    return;
+
+                offset = Math.max( e.clientY - item.getBoundingClientRect().top, 0 );
+
+                innerDiv.scrollTop = offset;
+
+            }, false );
+
+            w.addEventListener( 'mouseup', function( e ) {
+
+                dragging = false;
+
+            }, false );
 
     		indicator.style.height = indicatorHeight + '%';
 
