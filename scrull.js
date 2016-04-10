@@ -66,7 +66,6 @@
 
     		indicatorHeight = Math.ceil( innerDiv.itemHeight * 100 / innerDiv.height ) + Math.ceil( scrullPadding * 100 / innerDiv.height );
     		indicatorHeight = Math.min( indicatorHeight, 100 );
-    		indicatorHeight = Math.max( indicatorHeight, 5 );
 
     		indicator.style.height = indicatorHeight + '%';
 
