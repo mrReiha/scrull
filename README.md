@@ -37,6 +37,7 @@ ___
 You've two global method to use:
 
 1. `scrullTo`: Smooth version for native `scrollTo`. It scrolls `document.body` by default; But if you want to scroll inside some other element, it's possible by `call` or `apply` method. Example:
+
  ```
 scrullTo.call( someAnotherElement, 25 );
 ```
