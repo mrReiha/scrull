@@ -99,6 +99,9 @@
     		if ( indicatorHeight < 100 & !~item.className.search( /show\-scruller/gi ) )
     			item.className += ' show-scruller';
 
+			if ( indicatorHeight == 100 && ~item.className.search( /show\-scruller/gi ) )
+				item.className = item.className.replace( /\s?show\-scruller/gi, '' );
+
     		// .rel == position: relative
     		if ( styles.position == 'static' )
     			item.className += ' rel';
