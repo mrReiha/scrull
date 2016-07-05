@@ -41,4 +41,4 @@ You've two global method to use:
  ```
 scrullTo.call( someAnotherElement, 25 );
 ```
-2. `scrullIt`: The method that will fire on **.scrull** elements. You can easily make any element you want scrullable.
+2. `scrullIt`: The method that will fire on **.scrull** elements. You can easily make any element scrullable.

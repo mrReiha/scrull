@@ -1,11 +1,11 @@
 /**
- * @xCode 110110011000011011011000101101011101100010110001001000001101100110000101110110011000011000100000110110001010011111011001100001001101100110000100110110011000011100100000110110011000100000100000110110011000000111011000101010101101100010101101001000001101100110000010110110001011000111011011100011001101100010101000
+ * ##### 110110011000011011011000101101011101100010110001001000001101100110000101110110011000011000100000110110001010011111011001100001001101100110000100110110011000011100100000110110011000100000100000110110011000000111011000101010101101100010101101001000001101100110000010110110001011000111011011100011001101100010101000
  *
  * @name Scrull
  * @description Making scroll-bars more attracitve
  *
  * @author Reiha Hosseini ( @mrReiha ) <iam@reiha.net>
- * @version v0.0.1
+ * @version v0.0.3
  * @since 07/2015
  *
  * @license GPL
@@ -37,6 +37,9 @@
 				indicator,
 
                 dragging = false,
+				startY,
+
+				tempH,
 
 				indicatorHeight,
 
@@ -73,16 +76,53 @@
 
                 dragging = true;
 
+				startY = e.clientY;
+
+				tempH = this.getBoundingClientRect().top - scruller.getBoundingClientRect().top;
+
+				if ( ~d.body.className.search( /no\-selection/gi ) )
+					d.body.className += ' no-selection';
+
             }, false );
 
             d.addEventListener( 'mousemove', function( e ) {
 
-                var offset;
+                var offset,
+
+					y,
+
+					destTop,
+
+					scrullerPos,
+					itemPos,
+					indicatorPos;
 
                 if ( !dragging )
                     return;
 
-                offset = Math.max( e.clientY - item.getBoundingClientRect().top, 0 );
+				y = e.clientY;
+
+				itemPos = item.getBoundingClientRect();
+				indicatorPos = indicator.getBoundingClientRect();
+
+
+				offset = ( ( tempH + ( y - itemPos.top ) - ( startY - itemPos.top ) ) *
+						( innerDiv.height - itemPos.height ) ) / ( itemPos.height - indicatorPos.height );
+
+				/**
+				 * =================================================================================
+				 * ========= Less accurate =========================================================
+				 * ========= But more readable way =================================================
+				 * =================================================================================
+				 */
+
+				// scrullerPos = scruller.getBoundingClientRect();
+				// destTop = y - scrullerPos.top;
+
+				// if ( destTop < 0 )
+				// 		destTop = 0;
+
+				// offset = ( destTop * innerDiv.height / scrullerPos.height ) - startY;
 
                 innerDiv.scrollTop = offset;
 
@@ -91,6 +131,9 @@
             w.addEventListener( 'mouseup', function( e ) {
 
                 dragging = false;
+
+				if ( ~d.body.className.search( /no\-selection/gi ) )
+					d.body.className = d.body.className.replace( /\s?no\-selection/gi, '' );
 
             }, false );
 
