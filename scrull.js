@@ -80,7 +80,7 @@
 
 				tempH = this.getBoundingClientRect().top - scruller.getBoundingClientRect().top;
 
-				if ( ~d.body.className.search( /no\-selection/gi ) )
+				if ( !~d.body.className.search( /no\-selection/gi ) )
 					d.body.className += ' no-selection';
 
             }, false );
