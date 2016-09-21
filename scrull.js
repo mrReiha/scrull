@@ -5,7 +5,7 @@
  * @description Making scroll-bars more attracitve
  *
  * @author Reiha Hosseini ( @mrReiha ) <iam@reiha.net>
- * @version v0.0.3
+ * @version v0.0.4
  * @since 07/2015
  *
  * @license GPL
@@ -36,6 +36,8 @@
 				scruller,
 				indicator,
 
+				lastScrulledLM,
+
                 dragging = false,
 				startY,
 
@@ -57,7 +59,10 @@
 
     		scruller.appendChild( indicator );
 
-    		innerDiv.innerHTML = item.innerHTML;
+			if ( lastScrulledLM = item.querySelector( '.inner-scrull' ) )
+				innerDiv.innerHTML = lastScrulledLM.innerHTML;
+			else
+				innerDiv.innerHTML = item.innerHTML;
 
     		item.innerHTML = '';
 
@@ -215,6 +220,15 @@
 
 	while ( item = LMs[ --i ] )
         scrullIt( item );
+
+	w.addEventListener( 'resize', function( e ) {
+
+		i = LMs.length;
+
+		while ( item = LMs[ --i ] )
+	        scrullIt( item );
+
+	}, false );
 
     w.scullTo = scrullTo;
     w.scrullIt = scrullIt;
