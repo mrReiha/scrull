@@ -1,6 +1,8 @@
 # Scrull
 
-Making scroll-bars more attracitve
+![no dependency](https://img.shields.io/badge/no-dependency-green.svg)
+
+Making scroll-bars more attractive.
 
 ___
 
@@ -31,6 +33,8 @@ ___
 
 </body>
 ```
+
+above example will give a nice scroll-bar for all of your `.scrull` elements by default; but if you want to use smooth-scrolling function by yourself you should check `.scrullTo` method at the [API](#api) section.
 
 ## API
 
