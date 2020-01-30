@@ -230,7 +230,7 @@
 
 	}, false );
 
-    w.scullTo = scrullTo;
+    w.scrullTo = scrullTo;
     w.scrullIt = scrullIt;
 
 })( this, document );
