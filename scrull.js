@@ -194,10 +194,10 @@
 
 				},
 
-				px = Math.min( LM.scrollHeight - LM.offsetHeight, px ),
-
 				LM = this || d.documentElement,
 				top = LM.scrollTop,
+
+				px = Math.min( LM.scrollHeight - LM.offsetHeight, px ),
 				diff = px - top,
 
 				prog = 0,
