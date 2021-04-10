@@ -194,22 +194,16 @@
 
 				},
 
+				px = Math.min( LM.scrollHeight - LM.offsetHeight, px ),
+
 				LM = this || d.documentElement,
 				top = LM.scrollTop,
-				diff, // we calculate `diff` after filtering `px` value
+				diff = px - top,
 
 				prog = 0,
 
 				start = new Date,
 				duration = 500; // Miliseconds
-
-
-			if ( LM == d.documentElement )
-				px = Math.min( d.documentElement.offsetHeight, screen.availHeight, px )
-			else
-				px = Math.min( LM.scrollHeight - LM.offsetHeight, px );
-
-			diff = px - top;
 
 			reqAnim( scroll );
 
