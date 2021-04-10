@@ -85,8 +85,8 @@
 
 				tempH = this.getBoundingClientRect().top - scruller.getBoundingClientRect().top;
 
-				if ( !~d.body.className.search( /no\-selection/gi ) )
-					d.body.className += ' no-selection';
+				if ( !item.hasClass( 'no-selection' ) )
+					item.addClass( 'no-selection' );
 
             }, false );
 
@@ -184,7 +184,7 @@
 					if ( prog > 1 )
 						prog = 1;
 
-					time = ( easeInOut && easeInOut( prog ) ) || ( ease.inOutCube && ease.inOutCube( prog ) ) ||
+					time = ( typeof easeInOut == 'function' && easeInOut( prog ) ) || ( ease && ease.inOutCube && ease.inOutCube( prog ) ) ||
 							( function( t ) { return ( --t ) * t * t + 1; } )( prog );
 
 					LM.scrollTop = top + ( diff * time );
@@ -194,22 +194,26 @@
 
 				},
 
-				px = Math.min( d.documentElement.offsetHeight - screen.availHeight ),
-
-				LM = this || ( DEScrolling ? d.documentElement : d.body ),
+				LM = this || d.documentElement,
 				top = LM.scrollTop,
-				diff = px - top,
+				diff, // we calculate `diff` after filtering `px` value
 
 				prog = 0,
 
 				start = new Date,
 				duration = 500; // Miliseconds
 
+
+			if ( LM == d.documentElement )
+				px = Math.min( d.documentElement.offsetHeight, screen.availHeight, px )
+			else
+				px = Math.min( LM.scrollHeight - LM.offsetHeight, px );
+
+			diff = px - top;
+
 			reqAnim( scroll );
 
 		},
-
-		DEScrolling = !!~navigator.userAgent.search( /firefox|msie|trident/i ),
 
 		LMs = d.querySelectorAll( '.scrull' ),
 
